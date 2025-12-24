@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Услуги - Агентство{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <h1 class="mb-0">Наши услуги</h1>
+    <button id="toggleCalculatorBtn" class="btn btn-outline-primary btn-lg" title="Открыть калькулятор" style="border-radius: 50px;">
+        🧮 <span class="d-none d-sm-inline">Калькулятор</span>
+    </button>
+</div>
+
+<!-- Калькулятор стоимости -->
+<div class="card mb-4 shadow-sm border-primary d-none fade-in" id="calculatorCard">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">📅 Расчет стоимости</h5>
+    </div>
+    <div class="card-body" id="costCalculator">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label for="serviceSelect" class="form-label">Выберите услугу:</label>
+                <select class="form-select" id="serviceSelect">
+                    <option value="" data-price="0" selected>-- Выберите услугу --</option>
+                    {% for service in services %}
+                    <option value="{{ service.id }}" data-price="{{ service.price|default:0 }}">{{ service.title }} ({{ service.price|default:"Договорная" }} руб./час)</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="hoursInput" class="form-label">Длительность (часов):</label>
+                <input type="number" class="form-control" id="hoursInput" min="1" value="1">
+            </div>
+            <div class="col-md-3">
+                <label for="guestsInput" class="form-label">Количество гостей:</label>
+                <input type="number" class="form-control" id="guestsInput" min="1" value="10">
+                <small class="text-muted">+500 руб./чел.</small>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="button" class="btn btn-success w-100" id="calculateBtn">Рассчитать</button>
+            </div>
+        </div>
+        <div class="mt-3 fs-4 text-end">
+            Итого: <strong><span id="totalCost">0</span> руб.</strong>
+        </div>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for service in services %}
+    <div class="col">
+        <div class="card h-100 service-card">
+            {% if service.image %}
+            <a href="{% url 'service_detail' service.pk %}">
+                <img src="{{ service.image.url }}" class="card-img-top" alt="{{ service.title }}">
+            </a>
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="{% url 'service_detail' service.pk %}" class="text-decoration-none text-dark">{{ service.title }}</a>
+                </h5>
+                <p class="card-text">{{ service.description }}</p>
+                {% if service.price %}
+                <p class="fw-bold">Цена: {{ service.price|floatformat:0 }} руб.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>Услуги пока не добавлены.</p>
+    {% endfor %}
+</div>
+{% endblock %}

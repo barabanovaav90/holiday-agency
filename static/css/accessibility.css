@@ -1,0 +1,132 @@
+
+:root {
+    --acc-bg: #ffffff;
+    --acc-text: #000000;
+    --acc-border: #000000;
+    --acc-link: #0000aa;
+    --acc-link-hover: #ff0000;
+}
+
+body.theme-bw {
+    --acc-bg: #000000;
+    --acc-text: #ffffff;
+    --acc-border: #ffffff;
+    --acc-link: #ffff00;
+    --acc-link-hover: #00ff00;
+}
+
+body.theme-wb {
+    --acc-bg: #ffffff;
+    --acc-text: #000000;
+    --acc-border: #000000;
+    --acc-link: #000000;
+    --acc-link-hover: #666666;
+}
+
+body.theme-blue {
+    --acc-bg: #9DD1FF;
+    --acc-text: #063C66;
+    --acc-border: #063C66;
+    --acc-link: #063C66;
+    --acc-link-hover: #000000;
+}
+
+body {
+    background-color: var(--acc-bg) !important;
+    color: var(--acc-text) !important;
+    font-size: 130% !important;
+    line-height: 1.5 !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--acc-text) !important;
+}
+
+a {
+    color: var(--acc-link) !important;
+    text-decoration: underline !important;
+}
+
+a:hover {
+    color: var(--acc-link-hover) !important;
+}
+
+.card,
+.navbar,
+.footer,
+.bg-light,
+.bg-white,
+.bg-dark,
+.bg-primary,
+.text-white {
+    background-color: var(--acc-bg) !important;
+    border: 1px solid var(--acc-border) !important;
+    color: var(--acc-text) !important;
+}
+
+.card-header,
+.card-header.bg-primary {
+    background-color: var(--acc-bg) !important;
+    border-bottom: 2px solid var(--acc-border) !important;
+    color: var(--acc-text) !important;
+}
+
+.btn,
+.btn-primary,
+.btn-outline-primary {
+    background-color: var(--acc-bg) !important;
+    color: var(--acc-text) !important;
+    border: 2px solid var(--acc-border) !important;
+}
+
+img {
+    filter: grayscale(100%) contrast(120%) !important;
+    border: 1px solid var(--acc-border);
+}
+
+p,
+li,
+td,
+th,
+label,
+input,
+select,
+.form-control,
+.form-select {
+    font-size: 1.25rem !important;
+    background-color: var(--acc-bg) !important;
+    color: var(--acc-text) !important;
+    border: 1px solid var(--acc-border) !important;
+}
+
+.accessibility-dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+}
+
+.dropdown-menu {
+    background-color: var(--acc-bg) !important;
+    border: 2px solid var(--acc-border) !important;
+}
+
+.dropdown-item {
+    color: var(--acc-text) !important;
+    font-size: 1.25rem !important;
+}
+
+.dropdown-item:hover {
+    background-color: var(--acc-text) !important;
+    color: var(--acc-bg) !important;
+}
+
+#calculateBtn {
+    background-color: var(--acc-bg) !important;
+    color: var(--acc-text) !important;
+    border: 2px solid var(--acc-border) !important;
+    font-weight: bold;
+}

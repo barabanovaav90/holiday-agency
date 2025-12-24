@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Результаты поиска: {{ query }}{% endblock %}
+
+{% block content %}
+<div class="row mb-5">
+    <div class="col-12">
+        <h1 class="display-5 fw-bold mb-4">Результаты поиска по запросу: "{{ query }}"</h1>
+        
+        {% if not results.services and not results.news and not results.portfolio %}
+            <div class="alert alert-warning">
+                По вашему запросу ничего не найдено. Попробуйте изменить ключевые слова.
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% if results.services %}
+<div class="row mb-5">
+    <div class="col-12">
+        <h2 class="h4 mb-3 border-bottom pb-2">Услуги</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for service in results.services %}
+            <div class="col">
+                <div class="card h-100 shadow-sm service-card">
+                    {% if service.image %}
+                    <a href="{% url 'service_detail' service.pk %}">
+                        <img src="{{ service.image.url }}" class="card-img-top" alt="{{ service.title }}">
+                    </a>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{% url 'service_detail' service.pk %}" class="text-decoration-none text-dark">{{ service.title }}</a>
+                        </h5>
+                        <p class="card-text">{{ service.description|truncatewords:20 }}</p>
+                        <p class="card-text fw-bold">{{ service.price }} ₽</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if results.portfolio %}
+<div class="row mb-5">
+    <div class="col-12">
+        <h2 class="h4 mb-3 border-bottom pb-2">Портфолио</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for item in results.portfolio %}
+            <div class="col">
+                <div class="card h-100 shadow-sm portfolio-card">
+                    <a href="{% url 'portfolio_detail' item.pk %}" class="text-decoration-none text-dark">
+                        {% if item.image %}
+                        <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.title }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item.title }}</h5>
+                            <p class="card-text">{{ item.description|truncatewords:20 }}</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if results.news %}
+<div class="row mb-5">
+    <div class="col-12">
+        <h2 class="h4 mb-3 border-bottom pb-2">Новости</h2>
+        <div class="list-group">
+            {% for item in results.news %}
+            <a href="{% url 'news_detail' item.pk %}" class="list-group-item list-group-item-action news-item d-flex gap-3 py-3" aria-current="true">
+                {% if item.image %}
+                <img src="{{ item.image.url }}" alt="{{ item.title }}" width="64" height="64" class="rounded-circle flex-shrink-0" style="object-fit: cover;">
+                {% else %}
+                <div class="rounded-circle bg-secondary flex-shrink-0" style="width: 64px; height: 64px;"></div>
+                {% endif %}
+                <div class="d-flex w-100 justify-content-between">
+                    <div>
+                        <h6 class="mb-1">{{ item.title }}</h6>
+                        <p class="mb-1 small text-muted">{{ item.text|truncatewords:30 }}</p>
+                    </div>
+                    <small class="text-nowrap">{{ item.date|date:"d.m.Y" }}</small>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

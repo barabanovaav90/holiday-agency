@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Портфолио{% endblock %}
+{% block content %}
+<h1 class="mb-4">Портфолио</h1>
+<div class="row">
+    {% for item in items %}
+    <div class="col-md-6 mb-4 portfolio-item">
+        <div class="card h-100 shadow-sm portfolio-card">
+            <a href="{% url 'portfolio_detail' item.pk %}" class="text-decoration-none text-dark">
+                {% if item.image %}
+                <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.title }}</h5>
+                    <p class="card-text">{{ item.description }}</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    {% empty %}
+    <p>Портфолио пусто.</p>
+    {% endfor %}
+</div>
+{% endblock %}

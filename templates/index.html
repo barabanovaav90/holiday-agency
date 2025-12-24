@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-5 mb-4 bg-light rounded-3 hero-section">
+    <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">Праздник вашей мечты!</h1>
+        <p class="col-md-8 fs-4 mx-auto">Мы организуем лучшие мероприятия: свадьбы, дни рождения, корпоративы. Доверьте нам свои эмоции!</p>
+        <a href="{% url 'services' %}" class="btn btn-primary btn-lg" type="button">Смотреть услуги</a>
+    </div>
+</div>
+
+<h2 class="mb-4">Последние новости</h2>
+<div class="row">
+    {% for n in last_news %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm news-item">
+            {% if n.image %}
+            <a href="{% url 'news_detail' n.pk %}">
+                <img src="{{ n.image.url }}" class="card-img-top" alt="{{ n.title }}">
+            </a>
+            {% else %}
+            <a href="{% url 'news_detail' n.pk %}" class="d-block bg-secondary text-white d-flex align-items-center justify-content-center text-decoration-none" style="height: 200px;">Нет фото</a>
+            {% endif %}
+            <div class="card-body">
+                <p class="text-muted small">{{ n.date|date:"d E Y" }}</p>
+                <h5 class="card-title">
+                    <a href="{% url 'news_detail' n.pk %}" class="text-decoration-none text-dark">{{ n.title }}</a>
+                </h5>
+                <p class="card-text">{{ n.text|truncatewords:20 }}</p>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col">
+        <p>Новостей пока нет.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

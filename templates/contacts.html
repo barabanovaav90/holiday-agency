@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Контакты{% endblock %}
+{% block content %}
+<h1>Контакты</h1>
+
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+{% endif %}
+
+<div class="row align-items-stretch">
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm border-0 bg-light h-100">
+            <div class="card-body p-4 d-flex flex-column">
+                <h2 class="h4 mb-3">Наши координаты</h2>
+                <p><strong>Адрес:</strong> г. Москва, Пресненская наб., д. 12 (Башня Федерация)</p>
+                <p><strong>Телефон:</strong> +7 (999) 000-00-00</p>
+                <p class="mb-4"><strong>Email:</strong> info@agency.ru</p>
+                
+                <div class="border rounded flex-grow-1 overflow-hidden" style="min-height: 300px;">
+                    <iframe src="https://yandex.ru/map-widget/v1/?text=Москва+Сити+Пресненская+набережная+12" width="100%" height="100%" frameborder="0" allowfullscreen="true" style="border:0;"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm border-0 bg-light h-100">
+            <div class="card-body p-4">
+                <h2 class="h4 mb-4">Напишите нам</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="mb-3">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}
+                        <div class="form-text">{{ field.help_text }}</div>
+                        {% endif %}
+                        {% for error in field.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                    <div class="d-grid mt-auto">
+                        <button type="submit" class="btn btn-primary btn-lg">Отправить сообщение</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
